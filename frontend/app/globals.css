@@ -1,0 +1,80 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    /* Future Garden Color Tokens */
+    --ivory-base: #FFFDF7;
+    --navy-deep: #14213D;
+    --navy-surface: #1E293B;
+    --teal-primary: #2A9D8F;
+    --teal-light: #E8F5F3;
+    --emerald-accent: #52B788;
+    --emerald-light: #EBF8F2;
+    --coral-alert: #F28482;
+    --coral-light: #FDF0F0;
+    --golden-sun: #F6C85F;
+    --golden-light: #FEF9EB;
+    --soft-blue: #A8DADC;
+    --lavender-mist: #DCD6F7;
+    --text-primary: #243047;
+    --text-muted: #64748B;
+    --border-subtle: rgba(20, 33, 61, 0.08);
+
+    /* System Backgrounds */
+    --background: var(--ivory-base);
+    --foreground: var(--text-primary);
+  }
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Glassmorphism Surface Tokens (Applied Strategically) */
+.glass-panel {
+  background: rgba(255, 253, 247, 0.78);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 10px 30px -5px rgba(20, 33, 61, 0.05), 0 0 0 1px rgba(20, 33, 61, 0.03);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(20, 33, 61, 0.06);
+  box-shadow: 0 4px 20px -2px rgba(20, 33, 61, 0.04);
+}
+
+.glass-pill {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(20, 33, 61, 0.08);
+}
+
+.glass-nav {
+  background: rgba(255, 253, 247, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(20, 33, 61, 0.06);
+}
+
+/* Subtle Garden Background Gradients */
+.garden-gradient-hero {
+  background: radial-gradient(circle at 10% 20%, rgba(42, 157, 143, 0.08) 0%, transparent 40%),
+              radial-gradient(circle at 90% 10%, rgba(246, 200, 95, 0.12) 0%, transparent 40%),
+              radial-gradient(circle at 50% 80%, rgba(220, 214, 247, 0.15) 0%, transparent 50%),
+              var(--ivory-base);
+}
+
+/* Accessibility Focus States */
+:focus-visible {
+  outline: 2px solid var(--teal-primary);
+  outline-offset: 2px;
+}
