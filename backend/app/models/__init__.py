@@ -1,6 +1,6 @@
 """
 SkillSathi - Consolidated SQLAlchemy Models Registry
-All 26 entities required for SIH 2026 PS 26241 Real Data Architecture.
+All 26 entities required for Real Data Architecture.
 """
 from app.models.base import TimeStampedBase
 from app.models.evidence_source import EvidenceSource, DataSyncRun, DataQualityCheck

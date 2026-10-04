@@ -38,7 +38,7 @@ Detailed technical specifications are available in the [`docs/`](./docs) directo
 - [Official Data Sources & Ingestion Pipeline](./docs/data-sources.md)
 - [AI Engine & Anti-Hallucination Guardrails](./docs/ai.md)
 - [Security, RBAC & Privacy Standards](./docs/security.md)
-- [SIH 2026 Judge Demonstration Guide](./docs/demo.md)
+- [Platform Demonstration Guide](./docs/demo.md)
 
 ---
 

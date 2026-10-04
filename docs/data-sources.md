@@ -65,4 +65,4 @@ SkillSathi categorizes all data into four strictly distinguished tiers:
 1. **`LIVE`**: Synced via verified API within the last 30 days.
 2. **`FRESH`**: Official survey data verified within the current fiscal year (e.g. 2024–2025).
 3. **`STALE`**: Verified data older than 24 months, flagged for re-verification.
-4. **`DEMO`**: Clearly marked `[DEMO DATA - SIH 2026 Simulation]` records used for hackathon demonstrations in unmapped districts.
+4. **`DEMO`**: Clearly marked `[DEMO DATA - Simulation]` records used for platform demonstrations in unmapped districts.

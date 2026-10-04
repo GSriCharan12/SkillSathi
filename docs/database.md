@@ -73,4 +73,4 @@ erDiagram
 ---
 
 ## 4. Provenance & Anti-Hallucination Guarantees
-Every factual metric displayed in the frontend or injected into the AI prompt requires non-null `data_source_id`, `survey_year`, `publisher_ministry`, and `source_url`. Any record where `is_demo=True` is forcibly tagged with `[DEMO DATA - SIH 2026 Simulation]`.
+Every factual metric displayed in the frontend or injected into the AI prompt requires non-null `data_source_id`, `survey_year`, `publisher_ministry`, and `source_url`. Any record where `is_demo=True` is forcibly tagged with `[DEMO DATA - Simulation]`.

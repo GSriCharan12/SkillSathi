@@ -53,7 +53,7 @@ async def get_database_health(
     "/version",
     response_model=ApiResponse[AppVersionInfo],
     summary="API and System Version Information",
-    description="Returns product version, AI provider configuration, and SIH problem statement context."
+    description="Returns product version, AI provider configuration, and platform context."
 )
 async def get_version_info(
     health_service: HealthService = Depends(get_health_service)

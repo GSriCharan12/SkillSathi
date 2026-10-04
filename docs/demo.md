@@ -1,9 +1,9 @@
-# SkillSathi SIH 2026 Judge Demonstration Guide
-**Problem Statement 26241: AI-Enabled Career Counselling & Family Decision-Support Platform for Vocational Education**
+# SkillSathi Platform Demonstration Guide
+**AI-Enabled Career Counselling & Family Decision-Support Platform for Vocational Education**
 
 ---
 
-## 1. Hackathon Demonstration Scenario
+## 1. Demonstration Scenario
 
 **Family Case Profile:**
 - **Learner:** Aarav Sharma (10th pass, Warangal, Telangana). Eager to pursue *Solar PV & Clean Energy Technician* (NSQF Level 4).
@@ -13,9 +13,9 @@
 
 ## 2. Step-by-Step Presentation Script
 
-### Step 1: Landing Page & Voice Language Selection
-- **Action:** Open `http://localhost:3000`. Toggle language to **తెలుగు (Telugu)** or **English**.
-- **Talking Point:** *"Vocational career decisions in India are family decisions. SkillSathi is built from the ground up for low-literacy families with bilingual voice guidance and intuitive touch controls."*
+### Step 1: Landing Page & Universal Access
+- **Action:** Open `http://localhost:3000`. 
+- **Talking Point:** *"Vocational career decisions in India are family decisions. SkillSathi is built from the ground up for families with clear voice guidance and intuitive touch controls."*
 
 ### Step 2: Joint Family Decision Room
 - **Action:** Navigate to **Family Decision Room** tab.
@@ -23,7 +23,7 @@
 
 ### Step 3: Verified Vocational Career Intelligence
 - **Action:** Switch to **Career Explorer** tab, search *Solar PV*, and open the detail drawer.
-- **Talking Point:** *"Every number shown has direct provenance. Notice the 86.5% placement rate, ₹18,500 starting salary, and direct AICTE lateral entry pathways. Demo records clearly carry the `[DEMO DATA - SIH 2026 Simulation]` badge."*
+- **Talking Point:** *"Every number shown has direct provenance. Notice the 86.5% placement rate, ₹18,500 starting salary, and direct AICTE lateral entry pathways. Demo records clearly carry the provenance badge."*
 
 ### Step 4: Grounded AI Counselling Dialogue
 - **Action:** Open **AI Family Counsellor** tab. Click the suggested prompt: *"What is the starting salary for Solar PV Technician in Warangal?"*
@@ -33,6 +33,6 @@
 - **Action:** Click *"Request Human Counsellor Escalation"*, then navigate to **Counsellor Workstation** tab.
 - **Talking Point:** *"When family friction requires human expertise, the ticket appears instantly in the counsellor queue. The certified counsellor attaches state hostel subsidies and lateral circulars."*
 
-### Step 6: Scheme Administrator Resistance Analytics
-- **Action:** Navigate to **Admin Data Control** tab. View District Heatmap for Warangal and click **"Export Anonymized CSV"**.
-- **Talking Point:** *"For MSDE administrators, SkillSathi provides real-time resistance telemetry mapping where and why parental stigma is concentrated—enabling targeted district-level policy interventions."*
+### Step 6: Scheme Administrator District Telemetry
+- **Action:** Open **Admin Telemetry** tab.
+- **Talking Point:** *"Policymakers see real-time district heatmaps showing where family hesitation is concentrated, enabling proactive mobile counselling deployment."*

@@ -26,7 +26,7 @@ from app.models.pathway import CareerPathway, CareerPathwayStep
 from app.models.counselling import CounsellingSession, CounsellorCase, CounsellorNote
 
 
-def test_complete_sih_user_journey(client: TestClient, db_session: Session):
+def test_complete_user_journey(client: TestClient, db_session: Session):
     # -------------------------------------------------------------
     # STAGE 1: Data Ground Truth Seeding (Verified Government Sources)
     # -------------------------------------------------------------
