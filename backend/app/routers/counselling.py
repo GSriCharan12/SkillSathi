@@ -109,6 +109,55 @@ async def escalate_to_human(
 
 
 @router.get(
+    "/starters",
+    summary="Get structured question starters for parents and learners",
+    description="Returns categorized starter chips for Parent, Learner, and Trade-specific dialogues."
+)
+async def get_starters(
+    trade_id: Optional[int] = Query(None),
+    state: Optional[str] = Query("Telangana"),
+    district: Optional[str] = Query("Warangal"),
+    db: Session = Depends(get_db)
+):
+    from app.models.trade import Trade
+    trade_title = "Vocational Skills"
+    if trade_id:
+        trade = db.query(Trade).filter(Trade.id == trade_id).first()
+        if trade:
+            trade_title = trade.title
+
+    parent_starters = [
+        {"text": f"What is the starting entry wage and salary growth for {trade_title} in {district}?", "intent": "INCOME", "label": "Entry Wage & Income"},
+        {"text": f"Is this a permanent job with employer PF/ESI benefits?", "intent": "JOB_SECURITY", "label": "Job Security & Benefits"},
+        {"text": f"Can my child pursue B.Voc or B.Tech degree laterally after this?", "intent": "CAREER_GROWTH", "label": "Degree & Higher Education"},
+        {"text": f"Are there verified ITI colleges in {district} with secure hostels?", "intent": "SAFETY", "label": "Hostel & Safety"},
+    ]
+
+    learner_starters = [
+        {"text": f"What practical tools and hands-on projects will I build in {trade_title}?", "intent": "CURRICULUM", "label": "Hands-on Skills"},
+        {"text": f"How much monthly stipend will I receive during NAPS apprenticeship?", "intent": "STIPEND", "label": "Apprenticeship Stipend"},
+        {"text": f"What companies in {state} hire apprentices from this trade?", "intent": "EMPLOYER", "label": "Hiring Companies"},
+        {"text": f"Can I start my own repair or service workshop after 2 years?", "intent": "ENTREPRENEURSHIP", "label": "Self-Employment & Business"},
+    ]
+
+    trade_specific_starters = [
+        {"text": f"Show government placement rate and retention statistics for {trade_title}", "intent": "GOV_DATA", "label": "Govt Tracer Data"},
+        {"text": f"Compare {trade_title} with standard general degrees (BA/B.Com)", "intent": "COMPARISON", "label": "Compare vs General Degree"},
+    ]
+
+    return success_response(
+        data={
+            "trade_id": trade_id,
+            "trade_title": trade_title,
+            "parent_starters": parent_starters,
+            "learner_starters": learner_starters,
+            "trade_specific_starters": trade_specific_starters,
+        },
+        message="Suggested starters retrieved successfully."
+    )
+
+
+@router.get(
     "/suggested-prompts",
     summary="Get tailored starter question chips",
     description="Returns high-relevance starter chips for learners and parents based on family location and active trade."
@@ -139,3 +188,4 @@ async def get_suggested_prompts(
         data={"role": role, "prompts": prompts},
         message="Suggested prompts retrieved."
     )
+

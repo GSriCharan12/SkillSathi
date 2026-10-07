@@ -41,41 +41,31 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 
     try {
       if (mode === "register") {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"}/api/v1/auth/register`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            full_name: fullName,
-            email: emailOrPhone.includes("@") ? emailOrPhone : undefined,
-            phone_number: !emailOrPhone.includes("@") ? emailOrPhone : undefined,
-            password,
-            role,
-            preferred_language: lang,
-            family_code: familyCode ? familyCode.trim().toUpperCase() : undefined,
-          }),
+        const res = await apiClient.register({
+          full_name: fullName,
+          email: emailOrPhone.includes("@") ? emailOrPhone : undefined,
+          phone_number: !emailOrPhone.includes("@") ? emailOrPhone : undefined,
+          password,
+          role,
+          preferred_language: lang,
+          family_code: familyCode ? familyCode.trim().toUpperCase() : undefined,
         });
-        const json = await res.json();
-        if (!res.ok || !json.success) throw new Error(json.message || "Registration failed.");
+        if (!res.success || !res.data) throw new Error(res.message || "Registration failed.");
         if (typeof window !== "undefined") {
-          localStorage.setItem("skillsathi_token", json.data.access_token);
+          localStorage.setItem("skillsathi_token", res.data.access_token);
         }
-        onAuthSuccess(json.data);
+        onAuthSuccess(res.data);
         onClose();
       } else {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"}/api/v1/auth/login`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email_or_phone: emailOrPhone,
-            password,
-          }),
+        const res = await apiClient.login({
+          email_or_phone: emailOrPhone,
+          password,
         });
-        const json = await res.json();
-        if (!res.ok || !json.success) throw new Error(json.message || "Login failed.");
+        if (!res.success || !res.data) throw new Error(res.message || "Login failed.");
         if (typeof window !== "undefined") {
-          localStorage.setItem("skillsathi_token", json.data.access_token);
+          localStorage.setItem("skillsathi_token", res.data.access_token);
         }
-        onAuthSuccess(json.data);
+        onAuthSuccess(res.data);
         onClose();
       }
     } catch (err: any) {

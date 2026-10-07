@@ -41,7 +41,8 @@ class GeminiAIProvider(BaseAIProvider):
         )
 
         try:
-            url = f"{self.base_url}/models/{self.model_name}:generateContent?key={self.api_key}"
+            model = self.model_name.replace("models/", "")
+            url = f"{self.base_url}/models/{model}:generateContent?key={self.api_key}"
             payload = {
                 "contents": [{"parts": [{"text": prompt}]}]
             }
@@ -49,13 +50,19 @@ class GeminiAIProvider(BaseAIProvider):
                 res = await client.post(url, json=payload)
                 if res.status_code == 200:
                     data = res.json()
-                    text = data.get("candidates", [{}])[0].get("content", {}).get("parts", [{}])[0].get("text", "")
-                    return AIResponse(
-                        content=text,
-                        provider_name="GeminiProvider",
-                        model_name=self.model_name,
-                        raw_response=data
-                    )
+                    candidates = data.get("candidates", [])
+                    if candidates:
+                        parts = candidates[0].get("content", {}).get("parts", [])
+                        if parts:
+                            text = parts[0].get("text", "")
+                            return AIResponse(
+                                content=text,
+                                provider_name="GeminiProvider",
+                                model_name=self.model_name,
+                                raw_response=data
+                            )
+                else:
+                    logger.error(f"Gemini API returned status {res.status_code}: {res.text}")
         except Exception as e:
             logger.error(f"Gemini API request failed: {e}")
 

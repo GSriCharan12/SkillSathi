@@ -603,7 +603,10 @@ export default function Home() {
 
                   {/* View 2: AI Counselling */}
                   {parentActiveTab === "ai_counsellor" && (
-                    <CounsellingHub initialTradeId={counsellingTradeId} />
+                    <CounsellingHub
+                      initialTradeId={counsellingTradeId}
+                      defaultSpeakerRole="PARENT"
+                    />
                   )}
 
                   {/* View 3: Evidence Hub */}
@@ -663,7 +666,10 @@ export default function Home() {
 
                   {/* View 2: AI Counselling */}
                   {learnerActiveTab === "ai_counsellor" && (
-                    <CounsellingHub initialTradeId={counsellingTradeId} />
+                    <CounsellingHub
+                      initialTradeId={counsellingTradeId}
+                      defaultSpeakerRole="LEARNER"
+                    />
                   )}
 
                   {/* View 3: Family Decision Room */}

@@ -31,16 +31,25 @@ import {
 interface CounsellingHubProps {
   initialTradeId?: number;
   initialTrades?: Trade[];
+  defaultSpeakerRole?: "PARENT" | "LEARNER";
 }
 
 export function CounsellingHub({
   initialTradeId,
   initialTrades = [],
+  defaultSpeakerRole = "PARENT",
 }: CounsellingHubProps) {
   const [trades, setTrades] = useState<Trade[]>(initialTrades);
   const [selectedTrade, setSelectedTrade] = useState<Trade | null>(null);
-  const [speakerRole, setSpeakerRole] = useState<"PARENT" | "LEARNER">("PARENT");
+  const [speakerRole, setSpeakerRole] = useState<"PARENT" | "LEARNER">(defaultSpeakerRole);
   const [language, setLanguage] = useState<"en" | "te" | "hi">("en");
+
+  // Sync speakerRole whenever defaultSpeakerRole prop changes
+  useEffect(() => {
+    if (defaultSpeakerRole) {
+      setSpeakerRole(defaultSpeakerRole);
+    }
+  }, [defaultSpeakerRole]);
   const [sessionId, setSessionId] = useState<string>("");
   const [inputMessage, setInputMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -59,8 +68,6 @@ export function CounsellingHub({
   // Human Escalation Modal
   const [isEscalationOpen, setIsEscalationOpen] = useState(false);
   const [escalationReason, setEscalationReason] = useState("");
-
-  const chatEndRef = useRef<HTMLDivElement>(null);
 
   // Initialize trade list & session
   useEffect(() => {
@@ -98,10 +105,27 @@ export function CounsellingHub({
 
     // Set introductory greeting if chat is empty
     if (messages.length === 0) {
+      const isLearner = speakerRole === "LEARNER";
       const greetingText =
         language === "te"
-          ? `నమస్కారం! నేను స్కిల్‌సాథీ AI కౌన్సెలర్. ${selectedTrade.title} ట్రేడ్ సంబంధిత భవిష్యత్తు, జీతం, భద్రత మరియు పై చదువుల గురించి మీ కుటుంబానికి అధికారిక ప్రభుత్వ వివరాలను అందిస్తాను. మీ ప్రశ్నను అడగండి.`
+          ? isLearner
+            ? `నమస్కారం! నేను స్కిల్‌సాథీ AI కౌన్సెలర్. ${selectedTrade.title} ట్రేడ్ సంబంధిత నైపుణ్యాలు, అప్రెంటిస్‌షిప్ స్టైపెండ్, కెరీర్ ఎదుగుదల మరియు పై చదువుల గురించి వివరాలను అడగండి.`
+            : `నమస్కారం! నేను స్కిల్‌సాథీ AI కౌన్సెలర్. ${selectedTrade.title} ట్రేడ్ సంబంధిత భవిష్యత్తు, జీతం, ఉద్యోగ భద్రత మరియు మీ పిల్లల పై చదువుల గురించి అధికారిక వివరాలను అందిస్తాను.`
+          : isLearner
+          ? `Namaste! I am your SkillSathi Career Guide. Ask me anything about practical skills, NAPS apprenticeship stipends, top hiring companies, or lateral degree paths for ${selectedTrade.title}.`
           : `Namaste! I am SkillSathi AI Counsellor. I am here to help your family understand verified career outcomes, salary ranges, and higher education paths for ${selectedTrade.title}. How may I help you today?`;
+
+      const learnerChips = [
+        "What practical tools and skills will I learn?",
+        "How much monthly stipend will I get in apprenticeship?",
+        "How can I join 2nd year Polytechnic / B.Tech after ITI?",
+      ];
+
+      const parentChips = [
+        "What is the verified entry salary in our district?",
+        "Is this a secure job with PF/ESI benefits?",
+        "Can my child pursue a university degree later?",
+      ];
 
       setMessages([
         {
@@ -109,19 +133,22 @@ export function CounsellingHub({
           message: greetingText,
           language: language,
           timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-          suggested_chips: [
-            language === "te" ? "ITI electrician ki future ela untundi?" : "What is the career growth and future?",
-            language === "te" ? "Starting salary entha untundi?" : "What is the verified starting salary?",
-            language === "te" ? "Higher studies ki chance unda?" : "Can my child study Diploma or Degree later?",
-          ],
+          suggested_chips: isLearner ? learnerChips : parentChips,
         },
       ]);
     }
-  }, [selectedTrade, language]);
+  }, [selectedTrade, language, speakerRole]);
 
-  // Scroll to bottom
+  const chatContainerRef = useRef<HTMLDivElement>(null);
+
+  // Scroll only the internal chat container to bottom (prevents page jump)
   useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTo({
+        top: chatContainerRef.current.scrollHeight,
+        behavior: "smooth",
+      });
+    }
   }, [messages, isLoading]);
 
   const handleSendMessage = async (textToSend?: string) => {
@@ -303,7 +330,7 @@ export function CounsellingHub({
           </div>
 
           {/* Messages Feed */}
-          <div className="flex-1 overflow-y-auto p-5 space-y-4">
+          <div ref={chatContainerRef} className="flex-1 overflow-y-auto p-5 space-y-4">
             {messages.map((msg, index) => {
               const isAI = msg.speaker === "COUNSELLOR";
               const isUser = msg.speaker === "PARENT" || msg.speaker === "LEARNER";
@@ -448,7 +475,6 @@ export function CounsellingHub({
                 </span>
               </div>
             )}
-            <div ref={chatEndRef} />
           </div>
 
           {/* Suggested Starter Chips Footer */}
